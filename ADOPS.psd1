@@ -71,6 +71,7 @@ NestedModules = @(
     'Functions/Get-AdoAuth.psm1',
     'Functions/Get-BasicAuthHttpHeaders.psm1',
     'Functions/Invoke-AdoRestMethod.psm1',
+    'Apps/Register-AdoOAuthApp.psm1',
     'PullRequests/Get-AdoPullRequest.psm1',
     'PullRequests/Get-AdoPullRequests.psm1',
     'PullRequests/Get-AdoPullRequestWorkItems.psm1',
