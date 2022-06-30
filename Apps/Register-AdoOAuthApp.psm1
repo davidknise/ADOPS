@@ -34,29 +34,23 @@ Function Register-AdoOAuthApp
         [Array] $AuthorizedScopes
     )
 
-    $uri = 'https://app.vsaex.visualstudio.com'
-
-    $body = @{
-        clientId = "00000000-0000-0000-0000-000000000000"
-        providerName = $CompanyName
-        providerUrl = $CompanyWebsite
-        tosUrl = $TermsOfServiceUrl
-        privacyUrl = $PrivacyStatementUrl
-        appName = $ApplicationName
-        appUrl = $ApplicationWebsite
-        description = $Description
-        appLogoUrl = $LogoUrl
-        redirectUrl = $AuthorizationCallbackUrl
-        scopes = $($AuthorizedScopes -join '+')
-    }
-
-    $body.completionOptions = $CompletionOptions
-
     $response = Invoke-AdoRestMethod `
-        -Uri $uri `
+        -Uri 'https://app.vsaex.visualstudio.com' `
         -Method 'POST' `
         -ContentType 'application/x-www-form-urlencoded; charset=UTF-8'
-        -BodyObject $body `
+        -BodyObject @{
+            clientId = "00000000-0000-0000-0000-000000000000"
+            providerName = $CompanyName
+            providerUrl = $CompanyWebsite
+            tosUrl = $TermsOfServiceUrl
+            privacyUrl = $PrivacyStatementUrl
+            appName = $ApplicationName
+            appUrl = $ApplicationWebsite
+            description = $Description
+            appLogoUrl = $LogoUrl
+            redirectUrl = $AuthorizationCallbackUrl
+            scopes = $($AuthorizedScopes -join '+')
+        } `
         -OutFile $OutFile
 
     Write-Output $response

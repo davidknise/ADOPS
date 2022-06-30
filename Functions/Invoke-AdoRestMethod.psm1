@@ -36,7 +36,7 @@ Function Invoke-AdoRestMethod
     {
         foreach ($key in $ReplaceKeys.GetEnumerator())
         {
-            $restUri = $restUri.Replace("{$($key.Name)}", $key.Value)
+            $restUri = $restUri.Replace("{$($key.Name)}", [System.Uri]::EscapeDataString($key.Value))
         }
     }
 
@@ -57,7 +57,22 @@ Function Invoke-AdoRestMethod
 
     if ($BodyObject)
     {
-        $Body = $BodyObject | ConvertTo-Json -Depth 10
+        if ($ContentType -imatch 'application/x-www-form-urlencoded')
+        {
+            $BodyArgs = @()
+
+            foreach ($arg in $BodyObject.GetEnumerator())
+            {
+                $BodyArgs += "$([System.Uri]::EscapeDataString($arg.Key))=$([System.Uri]::EscapeDataString($arg.Value))"
+            }
+
+            $Body = $BodyArgs -join '&'
+        }
+        else
+        {
+            # Assume application/json
+            $Body = $BodyObject | ConvertTo-Json -Depth 10
+        }
     }
 
     if ($Quiet.IsPresent)
