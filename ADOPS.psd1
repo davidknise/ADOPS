@@ -83,6 +83,7 @@ NestedModules = @(
     'PullRequests/Update-AdoPullRequest.psm1',
     'Repositories/Get-AdoRepositories.psm1'
     'Repositories/Get-AdoRepository.psm1',
+    'Repositories/New-AdoGitRepository.psm1',
     'WorkItems/Get-AdoWorkItem.psm1'
 )
 
